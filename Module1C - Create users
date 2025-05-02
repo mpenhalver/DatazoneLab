@@ -1,0 +1,18 @@
+BAUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/BusinessAnalyst --query "id" --output text`
+DAUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/DomainAdmin --query "id" --output text`
+WMDSUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/WealthMgntDataSteward --query "id" --output text`
+PBDAUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/PersonalBankingDataSteward --query "id" --output text`
+IDSUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/InsuranceDataSteward --query "id" --output text`
+IMSUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/InsuranceMetadataSteward --query "id" --output text`
+WMMSSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/WealthMgntMetadataSteward --query "id" --output text`
+PBMSUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/PersonalBankingMetadataSteward --query "id" --output text`
+DMSUSERID=`aws datazone create-user-profile --domain-identifier $DOMAINID --user-type IAM_ROLE --user-identifier arn:aws:iam::$ACCOUNTID:role/DomainMetadataSteward --query "id" --output text`
+aws datazone add-policy-grant --detail addToProjectMemberPool={includeChildDomainUnits=true} --domain-identifier $DOMAINID --entity-identifier $ROOTDOMAINUNITID --entity-type DOMAIN_UNIT --policy-type ADD_TO_PROJECT_MEMBER_POOL --principal '{"user":{"allUsersGrantFilter": { }}}'
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $CUST360PROJECTID  --member userIdentifier=$BAUSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $WLTHDATAPROJECTID  --member userIdentifier=$WMDSUSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $PERSDATAPROJECTID  --member userIdentifier=$PBDAUSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $INSDATAPROJECTID  --member userIdentifier=$IDSUSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $WLTHMETAPROJECTID  --member userIdentifier=$WMMSSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $PERSMETAPROJECTID  --member userIdentifier=$PBMSUSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $INSMETAPROJECTID  --member userIdentifier=$IMSUSERID
+aws datazone create-project-membership --designation PROJECT_CONTRIBUTOR  --domain-identifier $DOMAINID --project-identifier $DOMAINMETAPROJECTID  --member userIdentifier=$DAUSERID
