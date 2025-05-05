@@ -1,0 +1,8 @@
+		{
+			"Action": [
+				"datazone:PostLineageEvent",
+				"datazone:GetDomain"
+			],
+			"Resource": "*",
+			"Effect": "Allow"
+		},
